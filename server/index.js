@@ -23,8 +23,8 @@ const initializeServer = (port) => {
 app.use(morgan("dev"));
 app.use(express.json());
 app.use((req, res) => {
-  debug(chalk.green("REQUEST ARRIVED"));
-  res.json("LLEGUE MA BRO");
+  debug(chalk.green("REQUEST ARRIVED ʕง•ᴥ•ʔง"));
+  res.json("LLEGUE MA BRO ＼ʕ •ᴥ•ʔ／");
 });
 
 app.use(notFoundHandler);
