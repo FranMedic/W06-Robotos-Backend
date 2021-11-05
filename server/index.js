@@ -4,6 +4,7 @@ const debug = require("debug")("robots:server");
 const morgan = require("morgan");
 const chalk = require("chalk");
 const { notFoundHandler, generalErrorHandler } = require("./error");
+const robotsRoutes = require("./routes/robotsRoutes");
 
 const app = express();
 
@@ -22,10 +23,12 @@ const initializeServer = (port) => {
 
 app.use(morgan("dev"));
 app.use(express.json());
-app.use((req, res) => {
+app.use((req, res, next) => {
   debug(chalk.green("REQUEST ARRIVED ʕง•ᴥ•ʔง"));
-  res.json("LLEGUE MA BRO ＼ʕ •ᴥ•ʔ／");
+  next();
 });
+
+app.use("/robots", robotsRoutes);
 
 app.use(notFoundHandler);
 app.use(generalErrorHandler);
