@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node .",
     "dev": "node index",
-    "test": "jest --collect-coverage"
+    "test": "jest --watchAll --collect-coverage"
   },
   "keywords": [],
   "author": "",

@@ -15,10 +15,7 @@ const factoryRobots = Factory.define(({ sequence }) => ({
       min: 0,
       max: 10,
     }),
-    creationData: datatype.number({
-      min: 0,
-      max: 10,
-    }),
+    creationData: datatype.string(),
   },
 }));
 
