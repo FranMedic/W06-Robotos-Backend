@@ -105,6 +105,45 @@ describe("Given a deleteRobotById function", () => {
 
       await deleteRobotById(req, res, next);
 
+      expect(Robot.findByIdAndDelete).toHaveBeenCalledWith(idRobot);
+    });
+  });
+  describe("And Robot.findByIdAndDelete rejects", () => {
+    test("Then it should invoke next function with the error rejected", async () => {
+      const error = {};
+      Robot.findByIdAndDelete = jest.fn().mockRejectedValue(error);
+      const req = {
+        params: {
+          idRobot: 0,
+        },
+      };
+      const res = {};
+      const next = jest.fn();
+
+      await deleteRobotById(req, res, next);
+
+      expect(next).toHaveBeenCalledWith(error);
+      expect(error).toHaveProperty("code");
+      expect(error.code).toBe(400);
+    });
+  });
+
+  describe("and Robot.findById resolves to fakeRobot", () => {
+    test("Then it should invoke res.json with the string Deleted ᕦʕ •ᴥ•ʔᕤ", async () => {
+      const idRobot = 10;
+      Robot.findByIdAndDelete = jest.fn().mockResolvedValue({});
+      const req = {
+        params: {
+          idRobot,
+        },
+      };
+      const res = {
+        json: jest.fn(),
+      };
+      const next = jest.fn();
+
+      await deleteRobotById(req, res, next);
+
       expect(res.json).toHaveBeenCalledWith("Deleted ᕦʕ •ᴥ•ʔᕤ");
     });
   });
