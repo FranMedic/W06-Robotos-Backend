@@ -3,7 +3,7 @@ const {
   getRobots,
   getRobotById,
   deleteRobotById,
-} = require("../controller/robotsController");
+} = require("../controller/robotsControllers");
 
 const router = express.Router();
 
