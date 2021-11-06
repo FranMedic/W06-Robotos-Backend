@@ -1,5 +1,8 @@
 const Robot = require("../../database/models/robot");
-const { getFakeRobots } = require("../../factories/robotsFactory");
+const {
+  getFakeRobots,
+  getFakeRobot,
+} = require("../../factories/robotsFactory");
 const { getRobots, getRobotById } = require("./robotsControllers");
 
 describe("Given  a getRobots function", () => {
@@ -57,6 +60,26 @@ describe("Given a getRobotById function", () => {
       expect(next).toHaveBeenCalledWith(error);
       expect(error).toHaveProperty("code");
       expect(error.code).toBe(400);
+    });
+  });
+
+  describe("and Robot.findById resolves to fakeRobot", () => {
+    test("Then it should invoke res.json with the object fakeRobot", async () => {
+      const idRobot = 10;
+      const fakeRobot = getFakeRobot();
+      Robot.findById = jest.fn().mockResolvedValue(fakeRobot);
+      const req = {
+        params: {
+          idRobot,
+        },
+      };
+      const res = {
+        json: jest.fn(),
+      };
+
+      await getRobotById(req, res);
+
+      expect(res.json).toHaveBeenCalledWith(fakeRobot);
     });
   });
 });
