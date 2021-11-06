@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node .",
+    "dev": "node index",
+    "test": "jest --watchAll --collect-coverage"
   },
   "keywords": [],
   "author": "",
@@ -15,14 +17,16 @@
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.25.2",
-    "nodemon": "^2.0.14",
-    "jest": "^27.3.1"
+    "jest": "^27.3.1",
+    "nodemon": "^2.0.14"
   },
   "dependencies": {
     "chalk": "^4.1.2",
     "debug": "^4.3.2",
-    "express": "^4.17.1",
     "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "faker": "^5.5.3",
+    "fishery": "^2.0.0",
     "mongoose": "^6.0.12",
     "morgan": "^1.10.0",
     "msw": "^0.35.0"
