@@ -3,7 +3,11 @@ const {
   getFakeRobots,
   getFakeRobot,
 } = require("../../factories/robotsFactory");
-const { getRobots, getRobotById } = require("./robotsControllers");
+const {
+  getRobots,
+  getRobotById,
+  deleteRobotById,
+} = require("./robotsControllers");
 
 describe("Given  a getRobots function", () => {
   describe("When it receives an object res", () => {
@@ -80,6 +84,28 @@ describe("Given a getRobotById function", () => {
       await getRobotById(req, res);
 
       expect(res.json).toHaveBeenCalledWith(fakeRobot);
+    });
+  });
+});
+
+describe("Given a deleteRobotById function", () => {
+  describe("When it receives a req with an id 10, a res object and a next function", () => {
+    test("Then it should invoke Robot.findByIdandDelete with the id 10", async () => {
+      const idRobot = 10;
+      Robot.findByIdAndDelete = jest.fn().mockResolvedValue({});
+      const req = {
+        params: {
+          idRobot,
+        },
+      };
+      const res = {
+        json: jest.fn(),
+      };
+      const next = () => {};
+
+      await deleteRobotById(req, res, next);
+
+      expect(res.json).toHaveBeenCalledWith("Deleted ᕦʕ •ᴥ•ʔᕤ");
     });
   });
 });
