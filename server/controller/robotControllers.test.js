@@ -3,7 +3,11 @@ const {
   getFakeRobots,
   getFakeRobot,
 } = require("../../factories/robotsFactory");
-const { getRobots, getRobotById } = require("./robotsControllers");
+const {
+  getRobots,
+  getRobotById,
+  deleteRobotById,
+} = require("./robotsControllers");
 
 describe("Given  a getRobots function", () => {
   describe("When it receives an object res", () => {
@@ -80,6 +84,67 @@ describe("Given a getRobotById function", () => {
       await getRobotById(req, res);
 
       expect(res.json).toHaveBeenCalledWith(fakeRobot);
+    });
+  });
+});
+
+describe("Given a deleteRobotById function", () => {
+  describe("When it receives a req with an id 10, a res object and a next function", () => {
+    test("Then it should invoke Robot.findByIdandDelete with the id 10", async () => {
+      const idRobot = 10;
+      Robot.findByIdAndDelete = jest.fn().mockResolvedValue({});
+      const req = {
+        params: {
+          idRobot,
+        },
+      };
+      const res = {
+        json: jest.fn(),
+      };
+      const next = () => {};
+
+      await deleteRobotById(req, res, next);
+
+      expect(Robot.findByIdAndDelete).toHaveBeenCalledWith(idRobot);
+    });
+  });
+  describe("And Robot.findByIdAndDelete rejects", () => {
+    test("Then it should invoke next function with the error rejected", async () => {
+      const error = {};
+      Robot.findByIdAndDelete = jest.fn().mockRejectedValue(error);
+      const req = {
+        params: {
+          idRobot: 0,
+        },
+      };
+      const res = {};
+      const next = jest.fn();
+
+      await deleteRobotById(req, res, next);
+
+      expect(next).toHaveBeenCalledWith(error);
+      expect(error).toHaveProperty("code");
+      expect(error.code).toBe(400);
+    });
+  });
+
+  describe("and Robot.findById resolves to fakeRobot", () => {
+    test("Then it should invoke res.json with the string Deleted ᕦʕ •ᴥ•ʔᕤ", async () => {
+      const idRobot = 10;
+      Robot.findByIdAndDelete = jest.fn().mockResolvedValue({});
+      const req = {
+        params: {
+          idRobot,
+        },
+      };
+      const res = {
+        json: jest.fn(),
+      };
+      const next = jest.fn();
+
+      await deleteRobotById(req, res, next);
+
+      expect(res.json).toHaveBeenCalledWith("Deleted ᕦʕ •ᴥ•ʔᕤ");
     });
   });
 });

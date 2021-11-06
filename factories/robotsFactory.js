@@ -3,7 +3,7 @@ const { lorem } = require("faker/locale/es");
 const { Factory } = require("fishery");
 
 const factoryRobots = Factory.define(({ sequence }) => ({
-  _id: sequence,
+  id: sequence,
   name: lorem.words(3),
   image: image.imageUrl(),
   features: {
