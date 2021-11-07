@@ -149,9 +149,9 @@ describe("Given a deleteRobotById function", () => {
   });
   describe("and Robot.findByIdAndDelete resolves and id undefined", () => {
     test("then it should invoke next function with the error created", async () => {
-      const error = new Error("Robot not found (╯°□°）╯︵ ┻━┻");
+      const error = new Error("Robot not found  (╯°□°）╯︵ ┻━┻");
       error.code = 404;
-      Robot.findByIdAndDelete = jest.fn().mockRejectedValue(error);
+      Robot.findByIdAndDelete = jest.fn();
       const req = {
         params: {
           idRobot: 0,
