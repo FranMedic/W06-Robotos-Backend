@@ -7,6 +7,7 @@ const {
   getRobots,
   getRobotById,
   deleteRobotById,
+  createRobot,
 } = require("./robotsControllers");
 
 describe("Given  a getRobots function", () => {
@@ -185,6 +186,48 @@ describe("Given a deleteRobotById function", () => {
       await deleteRobotById(req, res, next);
 
       expect(res.json).toHaveBeenCalledWith(fakeRobot);
+    });
+  });
+});
+
+describe("Given a createRobot function", () => {
+  describe("When it receives a req object with a body, a res objetc and with and a next function", () => {
+    test("Then it should invoke the method json of res with the Robot.Create", async () => {
+      const robotcito = getFakeRobot();
+
+      const req = {
+        body: robotcito,
+      };
+
+      Robot.create = jest.fn().mockResolvedValue(robotcito);
+      const res = {
+        json: jest.fn(),
+      };
+      const next = () => {};
+
+      await createRobot(req, res, next);
+
+      expect(Robot.create).toHaveBeenCalled();
+      expect(res.json).toHaveBeenCalledWith(robotcito);
+    });
+  });
+  describe("And Robot.findById rejects", () => {
+    test("Then it should invoke next function with the error rejected", async () => {
+      const error = {};
+      Robot.create = jest.fn().mockRejectedValue(error);
+      const req = {
+        params: {
+          idRobot: 0,
+        },
+      };
+      const res = {};
+      const next = jest.fn();
+
+      await createRobot(req, res, next);
+
+      expect(next).toHaveBeenCalledWith(error);
+      expect(error).toHaveProperty("code");
+      expect(error.code).toBe(400);
     });
   });
 });
