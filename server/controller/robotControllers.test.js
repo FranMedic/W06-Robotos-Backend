@@ -86,6 +86,26 @@ describe("Given a getRobotById function", () => {
       expect(res.json).toHaveBeenCalledWith(fakeRobot);
     });
   });
+
+  describe("and Robot.findByIdAndDelete resolves and id undefined", () => {
+    test("then it should invoke next function with the error created", async () => {
+      const error = new Error("Robot not found (╯°□°）╯︵ ┻━┻");
+      error.code = 404;
+      Robot.findByIdAndDelete = jest.fn().mockRejectedValue(error);
+      const req = {
+        params: {
+          idRobot: 0,
+        },
+      };
+      const res = {};
+      const next = jest.fn();
+
+      await deleteRobotById(req, res, next);
+
+      expect(next).toHaveBeenCalledWith(error);
+      expect(error).toHaveProperty("code");
+    });
+  });
 });
 
 describe("Given a deleteRobotById function", () => {
@@ -125,6 +145,25 @@ describe("Given a deleteRobotById function", () => {
       expect(next).toHaveBeenCalledWith(error);
       expect(error).toHaveProperty("code");
       expect(error.code).toBe(400);
+    });
+  });
+  describe("and Robot.findByIdAndDelete resolves and id undefined", () => {
+    test("then it should invoke next function with the error created", async () => {
+      const error = new Error("Robot not found (╯°□°）╯︵ ┻━┻");
+      error.code = 404;
+      Robot.findByIdAndDelete = jest.fn().mockRejectedValue(error);
+      const req = {
+        params: {
+          idRobot: 0,
+        },
+      };
+      const res = {};
+      const next = jest.fn();
+
+      await deleteRobotById(req, res, next);
+
+      expect(next).toHaveBeenCalledWith(error);
+      expect(error).toHaveProperty("code");
     });
   });
 
