@@ -8,9 +8,8 @@ const entryPassword = (req, res, next) => {
     next();
   } else {
     debug(chalk.red("You are in the wrong place Dude "));
-    res
-      .status(401)
-      .json({ error: "You are in the wrong place ma dude ʕ； •`ᴥ•´ʔ " });
+    res.status(401);
+    res.json({ error: "You are in the wrong place ma dude ʕ； •`ᴥ•´ʔ " });
   }
 };
 
