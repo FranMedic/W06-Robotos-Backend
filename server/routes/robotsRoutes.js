@@ -3,6 +3,7 @@ const {
   getRobots,
   getRobotById,
   deleteRobotById,
+  createRobot,
 } = require("../controller/robotsControllers");
 
 const router = express.Router();
@@ -13,9 +14,8 @@ router.get("/:idRobot", getRobotById);
 
 router.delete("/delete/:idRobot", deleteRobotById);
 
-/* router.post("/create", createRobot);
+router.post("/create", createRobot);
 
-
-router.put("/update", updateRobot); */
+// router.put("/update", updateRobot);
 
 module.exports = router;
