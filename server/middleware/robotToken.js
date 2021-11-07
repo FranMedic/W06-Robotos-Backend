@@ -2,8 +2,7 @@ const chalk = require("chalk");
 const debug = require("debug")("robots:token");
 
 const entryPassword = (req, res, next) => {
-  const { token } = req.query;
-  if (token === process.env.TOKEN) {
+  if (process.env.TOKEN === req.query.token) {
     debug(chalk.green("You are welcome we have cookies! ʕ♡˙ᴥ˙♡ʔ "));
     next();
   } else {
