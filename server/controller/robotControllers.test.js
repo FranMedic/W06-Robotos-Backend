@@ -169,8 +169,9 @@ describe("Given a deleteRobotById function", () => {
 
   describe("and Robot.findById resolves to fakeRobot", () => {
     test("Then it should invoke res.json with the string Deleted ᕦʕ •ᴥ•ʔᕤ", async () => {
-      const idRobot = 10;
-      Robot.findByIdAndDelete = jest.fn().mockResolvedValue({});
+      const idRobot = 1;
+      const fakeRobot = getFakeRobot();
+      Robot.findByIdAndDelete = jest.fn().mockResolvedValue(fakeRobot);
       const req = {
         params: {
           idRobot,
@@ -183,7 +184,7 @@ describe("Given a deleteRobotById function", () => {
 
       await deleteRobotById(req, res, next);
 
-      expect(res.json).toHaveBeenCalledWith("Deleted ᕦʕ •ᴥ•ʔᕤ");
+      expect(res.json).toHaveBeenCalledWith(fakeRobot);
     });
   });
 });

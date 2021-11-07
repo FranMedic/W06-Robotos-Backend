@@ -31,7 +31,7 @@ const deleteRobotById = async (req, res, next) => {
     const searchRobot = await Robot.findByIdAndDelete(idRobot);
     if (searchRobot) {
       debug(chalk.green("deleted item ʕ •ᴥ•ʔゝ☆ "));
-      res.json("Deleted ᕦʕ •ᴥ•ʔᕤ");
+      res.json(searchRobot);
     } else {
       const error = new Error("Robot not found  (╯°□°）╯︵ ┻━┻");
       error.code = 404;
