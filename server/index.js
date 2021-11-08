@@ -22,7 +22,6 @@ const initializeServer = (port) => {
     }
   });
 };
-app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
 app.use((req, res, next) => {
@@ -30,6 +29,7 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(cors());
 app.use("/robots", cors(), robotsRoutes);
 app.use("/users", cors(), userRoutes);
 app.use(notFoundHandler);
