@@ -1,24 +1,5 @@
 const { Schema, model } = require("mongoose");
 
-const featuresSchema = new Schema({
-  velocity: {
-    type: Number,
-    required: true,
-    min: 0,
-    max: 10,
-  },
-  resistance: {
-    type: Number,
-    required: true,
-    min: 0,
-    max: 10,
-  },
-  creationData: {
-    type: String,
-    required: true,
-  },
-});
-
 const robotSchema = new Schema({
   name: {
     type: String,
@@ -29,8 +10,22 @@ const robotSchema = new Schema({
     required: true,
   },
   features: {
-    type: featuresSchema,
-    required: true,
+    velocity: {
+      type: Number,
+      required: true,
+      min: 0,
+      max: 10,
+    },
+    resistance: {
+      type: Number,
+      required: true,
+      min: 0,
+      max: 10,
+    },
+    creationData: {
+      type: String,
+      required: true,
+    },
   },
 });
 
