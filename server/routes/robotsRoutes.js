@@ -10,14 +10,15 @@ const {
 const entryPassword = require("../middleware/robotToken");
 
 const router = express.Router();
+const auth = require("../middleware/auth");
 
-router.get("/", getRobots);
+router.get("/", auth, getRobots);
 
-router.get("/:idRobot", getRobotById);
+router.get("/:idRobot", auth, getRobotById);
 
-router.delete("/delete/:idRobot", entryPassword, deleteRobotById);
+router.delete("/delete/:idRobot", auth, entryPassword, deleteRobotById);
 
-router.post("/create", entryPassword, createRobot);
+router.post("/create", auth, entryPassword, createRobot);
 /*
 
 })(); router.put("/update", updateRobot);
