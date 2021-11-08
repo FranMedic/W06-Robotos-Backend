@@ -3,8 +3,10 @@ const cors = require("cors");
 const debug = require("debug")("robots:server");
 const morgan = require("morgan");
 const chalk = require("chalk");
+
 const { notFoundHandler, generalErrorHandler } = require("./error");
 const robotsRoutes = require("./routes/robotsRoutes");
+const userRoutes = require("./routes/usersRoutes");
 
 const app = express();
 app.use(cors());
@@ -30,7 +32,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/robots", robotsRoutes);
-
+app.use("/users", userRoutes);
 app.use(notFoundHandler);
 app.use(generalErrorHandler);
 module.exports = initializeServer;
