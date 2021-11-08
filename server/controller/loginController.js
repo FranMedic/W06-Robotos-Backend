@@ -8,13 +8,13 @@ const loginUser = async (req, res, next) => {
   const user = await User.findOne({ username });
   if (!user) {
     const error = new Error("wrong credentials (╯°□°）╯︵ ┻━┻");
-    error.code = 404;
+    error.code = 401;
     next(error);
   } else {
     const rightPassword = await bcrypt.compare(password, user.password);
     if (!rightPassword) {
       const error = new Error("wrong credentials (╯°□°）╯︵ ┻━┻");
-      error.code = 404;
+      error.code = 401;
       next(error);
     } else {
       const token = jwt.sign(
@@ -25,6 +25,7 @@ const loginUser = async (req, res, next) => {
         process.env.SECRETE,
         { expiresIn: 24 * 60 * 60 }
       );
+      res.json({ token });
     }
   }
 };
