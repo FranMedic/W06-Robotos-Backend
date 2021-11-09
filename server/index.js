@@ -23,19 +23,16 @@ const initializeServer = (port) => {
   });
 };
 app.use(morgan("dev"));
+app.use(cors());
 app.use(express.json());
-app.get("/cors", (req, res) => {
-  res.set("Access-Control-Allow-Origin", "*");
-  res.send({ msg: "This has CORS enabled 🎈" });
-});
+
 app.use((req, res, next) => {
   debug(chalk.green("REQUEST ARRIVED ʕง•ᴥ•ʔง"));
   next();
 });
 
-app.use(cors());
-app.use("/robots", cors(), robotsRoutes);
-app.use("/users", cors(), userRoutes);
+app.use("/robots", robotsRoutes);
+app.use("/users", userRoutes);
 app.use(notFoundHandler);
 app.use(generalErrorHandler);
 module.exports = initializeServer;
