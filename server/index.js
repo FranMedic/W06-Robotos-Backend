@@ -31,8 +31,8 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/robots", robotsRoutes);
-app.use("/users", userRoutes);
+app.use("/robots", cors(), robotsRoutes);
+app.use("/users", cors(), userRoutes);
 app.use(notFoundHandler);
 app.use(generalErrorHandler);
 module.exports = initializeServer;
