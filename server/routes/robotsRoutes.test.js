@@ -12,6 +12,15 @@ let server;
 let token;
 
 const request = supertest(app);
+const newrobot = {
+  name: "Wall-Y ",
+  image: "https://filmfilicos.com/wp-content/uploads/2020/06/wall-e.jpg",
+  features: {
+    velocity: 10,
+    resistance: 5,
+    creationData: "2019-11-24",
+  },
+};
 
 beforeAll(async () => {
   await dataBaseInitializer(process.env.MONGODB_TESTS);
@@ -87,6 +96,17 @@ describe("Given a /robots router", () => {
 
       expect(body).toHaveLength(2);
       expect(body).toContainEqual(expectedRobot);
+    });
+  });
+
+  describe("when a post request to /robots/create arrives with a robot", () => {
+    test("then it should respond with an status 201", async () => {
+      const { body } = await request
+        .get("/robots/create")
+        .set("Authorization", `Bearer ${token}`)
+        .send(newrobot);
+
+      console.log(`${body}patata`);
     });
   });
 });
