@@ -24,6 +24,10 @@ const initializeServer = (port) => {
 };
 app.use(morgan("dev"));
 app.use(express.json());
+app.get("/cors", (req, res) => {
+  res.set("Access-Control-Allow-Origin", "*");
+  res.send({ msg: "This has CORS enabled 🎈" });
+});
 app.use((req, res, next) => {
   debug(chalk.green("REQUEST ARRIVED ʕง•ᴥ•ʔง"));
   next();
