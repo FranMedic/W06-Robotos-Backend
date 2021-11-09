@@ -37,6 +37,8 @@ app.use((req, res, next) => {
 
 app.use("/robots", auth, robotsRoutes);
 app.use("/users", userRoutes);
+
 app.use(notFoundHandler);
 app.use(generalErrorHandler);
-module.exports = initializeServer;
+
+module.exports = { initializeServer, app };
