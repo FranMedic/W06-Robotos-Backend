@@ -7,6 +7,7 @@ const chalk = require("chalk");
 const { notFoundHandler, generalErrorHandler } = require("./error");
 const robotsRoutes = require("./routes/robotsRoutes");
 const userRoutes = require("./routes/usersRoutes");
+const auth = require("./middleware/auth");
 
 const app = express();
 
@@ -31,8 +32,8 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/robots", cors(), robotsRoutes);
-app.use("/users", cors(), userRoutes);
+app.use("/robots", auth, robotsRoutes);
+app.use("/users", userRoutes);
 app.use(notFoundHandler);
 app.use(generalErrorHandler);
 module.exports = initializeServer;
