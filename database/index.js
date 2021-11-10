@@ -22,15 +22,14 @@ const dataBaseInitializer = (robotsDB) =>
             "Connection to Server failed, what a pity : (╯°□°）╯︵ ┻━┻)"
           )
         );
-        debug.apply(chalk.red(error.message));
-        reject();
-        return;
+        debug(chalk.red(error.message));
+        reject(error);
       }
       debug(chalk.bgMagenta("Connect to Server Succesful YAY!  ＼ʕ •ᴥ•ʔ／ "));
       resolve();
     });
     mongoose.connection.on("close", () => {
-      debug(chalk.green("Desconectado de la base de datos"));
+      debug(chalk.green("Desconectado de la base de datos now I DIE"));
     });
   });
 
