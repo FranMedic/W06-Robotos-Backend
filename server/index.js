@@ -11,18 +11,21 @@ const auth = require("./middleware/auth");
 
 const app = express();
 
-const initializeServer = (port) => {
-  const server = app.listen(port, () => {
-    debug(chalk.magentaBright(`Listen to port: ${port}`));
+const initializeServer = (port) =>
+  new Promise((resolve) => {
+    const server = app.listen(port, () => {
+      debug(chalk.magentaBright(`Listen to port: ${port}`));
+    });
+
+    server.on("error", (error) => {
+      debug(chalk.red("A wild error appeared"));
+      if (error.code === "EADDRINUSE") {
+        debug(chalk.red(`The port ${port} is already in use (╯°□°）╯︵ ┻━┻`));
+      }
+    });
+    resolve(server);
   });
 
-  server.on("error", (error) => {
-    debug(chalk.red("A wild error appeared"));
-    if (error.code === "EADDRINUSE") {
-      debug(chalk.red(`The port ${port} is already in use (╯°□°）╯︵ ┻━┻`));
-    }
-  });
-};
 app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
@@ -34,6 +37,8 @@ app.use((req, res, next) => {
 
 app.use("/robots", auth, robotsRoutes);
 app.use("/users", userRoutes);
+
 app.use(notFoundHandler);
 app.use(generalErrorHandler);
-module.exports = initializeServer;
+
+module.exports = { initializeServer, app };
